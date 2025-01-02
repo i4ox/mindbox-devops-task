@@ -113,7 +113,13 @@ curl -sfL https://get.k3s.io | K3S_URL=https://192.168.0.81:6443 K3S_TOKEN=<toke
 
 ![nodes](./assets/master-nodes.png)
 
-## Пояснения к тому или иному решению
+## Запуск конфигурации на кластере
+
+Для начала копируем KUBECONFIG.
+
+```sh
+scp root@192.168.0.81:/etc/rancher/k3s/k3s.yaml ~/.kube/config
+```
 
 ## Структура проекта
 

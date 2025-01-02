@@ -31,7 +31,8 @@ spec:
                       - zone3
       containers:
         - name: mindbox-app # Чтобы не перепутать метку c названием контейнера делаю ее другой
-          image: ollama/ollama:latest # Так как не было требований к образу, то пусть будет ollama
+          image: nginx:latest # Как оказалось образ ollama весит 2Гб, долго ждать :P
+          # image: ollama/ollama:latest # Так как не было требований к образу, то пусть будет ollama
           readinessProbe:
             httpGet: # Проверяет доступность пода, чтобы решить направлять на него запросы или нет. Нужно для отказоустойчивости.
               path: /healtz
