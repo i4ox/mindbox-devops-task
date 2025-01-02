@@ -1,1 +1,26 @@
-
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mindbox-application
+spec:
+  replicas: 4 # Начальное количество реплик для отказаустойчивости
+  selector:
+    matchLabels:
+      app: mindbox-application # Метка, по которой selector будет искать поды
+  template:
+    metadata:
+      labels:
+        app: mindbox-application # Метка, которая присваивается созданным подам
+    spec:
+      containers:
+        - name: mindbox-app # Чтобы не перепутать метку c названием контейнера делаю ее другой
+          image: ollama/ollama:latest # Так как не было требований к образу, то пусть будет ollama
+          resources:
+            requests: # Ресурсы, которые выдаются гарантировано
+              memory: "128Mi"
+              cpu: "0.1" # По условию стабильно используются 0.1 от CPU
+            limits: # Ресурсы, в пределах которых может работать под
+              memory: "128Mi" # По условию 128Mi всегда достаточно
+              cpu: "0.4" # По условию на момент запуска пода требуется чуть больше, чем 0.1. Пусть будет 0.4
+          ports:
+            - containerPort: 8080 # Открываем порт для обработки запросов
