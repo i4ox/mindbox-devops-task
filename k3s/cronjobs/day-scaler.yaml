@@ -1,1 +1,19 @@
-
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: mindbox-application-day-scaler
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: scaler
+              image: bitnami/kubectl:latest
+              command: # Повышение до четырех под днем
+                - /bin/sh
+                - -c
+                - |
+                  kubectl scale deployment mindbox-application --replicas=4
+          restartPolicy: OnFailure # Перезапуск задачи в случае сбоя
+  schedule: "0 7 * * *" # 01:00

@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: mindbox-application-night-scaler
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: scaler
+              image: bitnami/kubectl:latest
+              command: # Понижение до двух под ночью
+                - /bin/sh
+                - -c
+                - |
+                  kubectl scale deployment mindbox-application --replicas=2
+          restartPolicy: OnFailure # Перезапуск задачи в случае сбоя
+  schedule: "0 1 * * *" # 01:00
