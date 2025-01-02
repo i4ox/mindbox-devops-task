@@ -51,7 +51,20 @@ IP-адреса узлов в локальной сети:
 - Worker-4: 192.168.0.64
 - Worker-5: 192.168.0.5
 
-## Разворачивание k3s кластера из 6 узлов
+### Структура проекта
+
+> [!WARNING]
+> Ради удобства разбил YAML-манифест логически по функционалу на различные файлы.
+
+**k3s** - основная директория.
+  - **deployment.yaml** - основной deployment.
+  - **hpa.yaml** - HorizontalPodAutoscaler.
+  - **cronjobs** - задачи для cron.
+    - **day-scaler.yaml** - то как должно работать утром.
+    - **night-scaler.yaml** - то как должно работать вечером.
+
+<details>
+<summary><h2>Разворачивание k3s кластера из 6 узлов</h2></summary>
 
 > [!IMPORTANT]
 > Крайне важно на всех узлах перед установкой k3s настроить firewalld.
@@ -113,7 +126,10 @@ curl -sfL https://get.k3s.io | K3S_URL=https://192.168.0.81:6443 K3S_TOKEN=<toke
 
 ![nodes](./assets/master-nodes.png)
 
-## Запуск конфигурации на кластере
+</details>
+
+<details>
+<summary><h2>Запуск конфигурации на кластере</h2></summary>
 
 Для начала копируем KUBECONFIG.
 
@@ -142,11 +158,4 @@ kubectl apply -f k3s/cronjobs/night-scaler.yaml
 
 ![apply_cronjobs](./assets/apply_cronjobs.png)
 
-## Структура проекта
-
-**k3s** - основная директория.
-  - **deployment.yaml** - основной deployment.
-  - **hpa.yaml** - HorizontalPodAutoscaler.
-  - **cronjobs** - задачи для cron.
-    - **day-scaler.yaml** - то как должно работать утром.
-    - **night-scaler.yaml** - то как должно работать вечером.
+</details>
