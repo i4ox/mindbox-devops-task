@@ -12,6 +12,23 @@ spec:
       labels:
         app: mindbox-application # Метка, которая присваивается созданным подам
     spec:
+      affinity: # Я рассматривал в том числе вариант через topologySpreadConstraints, но там кроме maxSkew больше нету способ управление, что слишком урезано.
+        podAffinity: # Отвечает за равномерное распределение под по зонам
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: topology.kubernetes.io/zone
+              labelSelector:
+                matchLabels:
+                  app: mindbox-application
+        nodeAffinity: # Отвечает за то на какиз узлах могут размещаться поды
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: topology.kubernetes.io/zone
+                    operator: In
+                    values: # Указываем к каким зонам должны принадлежать узлы
+                      - zone1
+                      - zone2
+                      - zone3
       containers:
         - name: mindbox-app # Чтобы не перепутать метку c названием контейнера делаю ее другой
           image: ollama/ollama:latest # Так как не было требований к образу, то пусть будет ollama
