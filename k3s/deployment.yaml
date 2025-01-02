@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: mindbox-application
 spec:
-  replicas: 4 # Начальное количество реплик для отказаустойчивости
+  replicas: 4 # Начальное количество реплик. Нужно для отказоустойчивости.
   selector:
     matchLabels:
       app: mindbox-application # Метка, по которой selector будет искать поды
@@ -16,6 +16,9 @@ spec:
         - name: mindbox-app # Чтобы не перепутать метку c названием контейнера делаю ее другой
           image: ollama/ollama:latest # Так как не было требований к образу, то пусть будет ollama
           readinessProbe:
+            httpGet: # Проверяет доступность пода, чтобы решить направлять на него запросы или нет. Нужно для отказоустойчивости.
+              path: /healtz
+              port: 8080
             initialDelaySeconds: 5 # Первая попытка по истечению 5 секунд(минимальное время инициализации 5 секунд)
             periodSeconds: 5 # Повторная проверка доступности по истечению промежутка в 5 секунд
           resources:

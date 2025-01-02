@@ -8,3 +8,8 @@ spec:
   scaleTargetRef: # Цель, которую надо масштабировать
     kind: Deployment
     name: mindbox-application
+  metrics: # Задаем метрику на CPU, которая говорит что надо масштабироваться если целевая нагрузка больше 50%. Нужно для отказоустойчивости.
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 50
