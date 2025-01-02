@@ -129,6 +129,19 @@ kubectl apply -f k3s/deployment.yaml
 
 ![apply_deployment](./assets/apply_deployment.png)
 
+```sh
+kubectl apply -f k3s/hpa.yaml
+```
+
+![apply_hpa](./assets/apply_hpa.png)
+
+```sh
+kubectl apply -f k3s/cronjobs/day-scaler.yaml
+kubectl apply -f k3s/cronjobs/night-scaler.yaml
+```
+
+![apply_cronjobs](./assets/apply_cronjobs.png)
+
 ## Структура проекта
 
 **k3s** - основная директория.
