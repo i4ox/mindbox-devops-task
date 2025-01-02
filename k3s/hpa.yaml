@@ -1,1 +1,10 @@
-
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: mindbox-application-hpa
+spec:
+  minReplicas: 2 # Минимально допустимое количество реплик
+  maxReplicas: 4 # По условию 4 реплик на пике достаточно
+  scaleTargetRef: # Цель, которую надо масштабировать
+    kind: Deployment
+    name: mindbox-application
