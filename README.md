@@ -121,6 +121,14 @@ curl -sfL https://get.k3s.io | K3S_URL=https://192.168.0.81:6443 K3S_TOKEN=<toke
 scp root@192.168.0.81:/etc/rancher/k3s/k3s.yaml ~/.kube/config
 ```
 
+После чего применяем нашу конфигурацию.
+
+```sh
+kubectl apply -f k3s/deployment.yaml
+```
+
+![apply_deployment](./assets/apply_deployment.png)
+
 ## Структура проекта
 
 **k3s** - основная директория.
